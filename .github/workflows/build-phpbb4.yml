@@ -1,0 +1,30 @@
+name: Build phpBB4 ZIP
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Repository klonen
+        uses: actions/checkout@v3
+
+      - name: ⚙️ PHP & Composer einrichten
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, xml, curl, intl
+
+      - name: 📦 Abhängigkeiten installieren
+        run: composer install --no-dev --optimize-autoloader
+
+      - name: 📁 Erstelle ZIP-Datei
+        run: |
+          zip -r phpbb4-complete.zip . -x ".git/*" "vendor/bin/*"
+
+      - name: 💾 ZIP als Download bereitstellen
+        uses: actions/upload-artifact@v3
+        with:
+          name: phpbb4-ready-to-upload
+          path: phpbb4-complete.zip
