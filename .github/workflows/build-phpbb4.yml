@@ -23,8 +23,9 @@ jobs:
         run: |
           zip -r phpbb4-complete.zip . -x ".git/*" "vendor/bin/*"
 
-      - name: 💾 ZIP als Download bereitstellen
-        uses: actions/upload-artifact@v3
-        with:
-          name: phpbb4-ready-to-upload
-          path: phpbb4-complete.zip
+     - name: 💾 ZIP als Download bereitstellen
+  uses: actions/upload-artifact@v4
+  with:
+    name: phpbb4-ready-to-upload
+    path: phpbb4-complete.zip
+
